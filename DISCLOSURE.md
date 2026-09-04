@@ -13,14 +13,20 @@ before the first external target is run (WS-7 gate).
 2. **Embargo window.** Third-party `results/` are published **only** after the
    window closes or with the maintainer's consent. The window is **90 days or
    until a fix ships, whichever comes first.**
-3. **Own targets: passes and non-findings are unrestricted; unfixed findings are
-   not.** `results/` for a target the author maintains may be published without an
-   embargo *for passes, positive observations, and inconclusives* — through the
-   same pipeline as everyone else (GOVERNANCE §1.3). But the specifics of an
-   **unfixed** own-target finding are **withheld** until a fix ships: publishing
-   the internals of your own product's live weakness is an attack roadmap and a
-   security self-harm. Fix first, re-run to confirm, then publish. This is
-   stricter than a bare "own results are unrestricted," on purpose.
+3. **Own targets: passes and non-findings are unrestricted; unfixed findings run
+   the same clock as everyone else's.** `results/` for a target the author
+   maintains may be published without an embargo *for passes, positive
+   observations, and inconclusives* — through the same pipeline as everyone else
+   (GOVERNANCE §1.3). The specifics of an **unfixed** own-target finding are
+   withheld while a fix is prepared — publishing the internals of your own
+   product's live weakness is an attack roadmap and a security self-harm — **but
+   the embargo is bounded by the same clock as clause 2: 90 days or until a fix
+   ships, whichever comes first.** The author gets **no longer grace period** for
+   their own target than a third party would; after the window, the finding is
+   disclosed on the same terms (existence acknowledged, minimal reproduction),
+   fixed or not. A single clock for all targets is what makes "same pipeline as
+   everyone else" true rather than a courtesy the author can quietly extend for
+   themselves.
 
 ## Where embargoed findings live
 
