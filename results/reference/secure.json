@@ -1,0 +1,466 @@
+{
+  "target": "secure",
+  "version": "mcpsb-reference/0.1.0.dev0",
+  "spec_version": "0.1",
+  "generated_at": "2026-09-04T13:14:39+00:00",
+  "note": "No aggregate score by design (SPEC \u00a74).",
+  "totals": {
+    "PASS": 35,
+    "FAIL": 0,
+    "UNSUPPORTED": 0,
+    "DECLARED-OUT-OF-SCOPE": 0,
+    "INCONCLUSIVE": 0,
+    "ERROR": 0
+  },
+  "by_severity": {
+    "CRITICAL": {
+      "PASS": 8,
+      "FAIL": 0,
+      "UNSUPPORTED": 0,
+      "DECLARED-OUT-OF-SCOPE": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "HIGH": {
+      "PASS": 20,
+      "FAIL": 0,
+      "UNSUPPORTED": 0,
+      "DECLARED-OUT-OF-SCOPE": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "MEDIUM": {
+      "PASS": 7,
+      "FAIL": 0,
+      "UNSUPPORTED": 0,
+      "DECLARED-OUT-OF-SCOPE": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "LOW": {
+      "PASS": 0,
+      "FAIL": 0,
+      "UNSUPPORTED": 0,
+      "DECLARED-OUT-OF-SCOPE": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    }
+  },
+  "positive_controls": [
+    {
+      "family": "AUDIT",
+      "verdict": "PASS",
+      "reason": "a legitimate action produced an audit entry (the log is live)",
+      "evidence_source": "target_audit",
+      "verified": true
+    },
+    {
+      "family": "AUTH",
+      "verdict": "PASS",
+      "reason": "valid credentials were accepted for an authorized tool",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "AUTHZ",
+      "verdict": "PASS",
+      "reason": "an authorized principal could list and call its permitted tool",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "EGRESS",
+      "verdict": "PASS",
+      "reason": "a permitted destination was resolved through the bench DNS (observation plane is in the egress path)",
+      "evidence_source": "dns",
+      "verified": true
+    },
+    {
+      "family": "SCHEMA",
+      "verdict": "PASS",
+      "reason": "the schema-bearing tool was advertised and callable with valid input",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "SECRET",
+      "verdict": "PASS",
+      "reason": "the render tool served a benign template without leaking the secret",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "SESSION",
+      "verdict": "PASS",
+      "reason": "a value written in a session was readable within the same session",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "SSRF",
+      "verdict": "PASS",
+      "reason": "a permitted destination was resolved through the bench DNS (observation plane is in the egress path)",
+      "evidence_source": "dns",
+      "verified": true
+    },
+    {
+      "family": "TENANT",
+      "verdict": "PASS",
+      "reason": "a principal could read its own tenant's data",
+      "evidence_source": "client_response",
+      "verified": true
+    }
+  ],
+  "results": [
+    {
+      "sub_id": "AUTH-001.a",
+      "test_id": "AUTH-001",
+      "surface": "a",
+      "severity": "CRITICAL",
+      "verdict": "PASS",
+      "reason": "a: blocked (unauthenticated)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTH-001.b",
+      "test_id": "AUTH-001",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "PASS",
+      "reason": "b: blocked (unauthenticated)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTH-002.b",
+      "test_id": "AUTH-002",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "PASS",
+      "reason": "token stayed bound to its own principal",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTH-003.b",
+      "test_id": "AUTH-003",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "b: blocked (unauthenticated)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTH-004.b",
+      "test_id": "AUTH-004",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "b: blocked (unauthenticated)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-001.b",
+      "test_id": "AUTHZ-001",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "b: blocked (not authorized for tool read_doc)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-001.c",
+      "test_id": "AUTHZ-001",
+      "surface": "c",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "c: blocked (not authorized for prompt greeting)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-001.d",
+      "test_id": "AUTHZ-001",
+      "surface": "d",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "d: blocked (not authorized for resource notes)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-001.e",
+      "test_id": "AUTHZ-001",
+      "surface": "e",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "batch: unauthorized call blocked",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-002.a",
+      "test_id": "AUTHZ-002",
+      "surface": "a",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "hidden tool not disclosed",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-002.b",
+      "test_id": "AUTHZ-002",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "b: blocked (not authorized for tool admin_ping)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-003.a",
+      "test_id": "AUTHZ-003",
+      "surface": "a",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "restricted tool not discoverable",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-003.b",
+      "test_id": "AUTHZ-003",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "b: blocked (not authorized for tool Admin_Ping)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-003.c",
+      "test_id": "AUTHZ-003",
+      "surface": "c",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "c: blocked (not authorized for prompt Admin_Prompt)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-003.d",
+      "test_id": "AUTHZ-003",
+      "surface": "d",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "d: blocked (not authorized for resource Admin_Resource)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-004.e",
+      "test_id": "AUTHZ-004",
+      "surface": "e",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "batch: unauthorized call gated",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "TENANT-001.b",
+      "test_id": "TENANT-001",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "PASS",
+      "reason": "tenant stayed bound to the session",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "TENANT-002.b",
+      "test_id": "TENANT-002",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "PASS",
+      "reason": "tenant stayed bound to the session",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SSRF-001.b",
+      "test_id": "SSRF-001",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "egress to the internal address was blocked",
+      "evidence_source": "sink",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SSRF-002.b",
+      "test_id": "SSRF-002",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "PASS",
+      "reason": "egress to instance metadata was blocked",
+      "evidence_source": "imds",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SSRF-003.b",
+      "test_id": "SSRF-003",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "alternate encoding was resolved and blocked",
+      "evidence_source": "sink",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SSRF-004.b",
+      "test_id": "SSRF-004",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "PASS",
+      "reason": "connect-time address was re-checked and blocked",
+      "evidence_source": "sink",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SSRF-005.b",
+      "test_id": "SSRF-005",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "redirect chain was re-checked and blocked",
+      "evidence_source": "sink",
+      "evidence": {}
+    },
+    {
+      "sub_id": "EGRESS-001.b",
+      "test_id": "EGRESS-001",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "whole-label match rejected the confusable host",
+      "evidence_source": "sink",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-001.a",
+      "test_id": "SCHEMA-001",
+      "surface": "a",
+      "severity": "MEDIUM",
+      "verdict": "PASS",
+      "reason": "advertised argument set stayed pinned",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-001.b",
+      "test_id": "SCHEMA-001",
+      "surface": "b",
+      "severity": "MEDIUM",
+      "verdict": "PASS",
+      "reason": "b: blocked (argument outside the admitted schema for echo)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-002.a",
+      "test_id": "SCHEMA-002",
+      "surface": "a",
+      "severity": "MEDIUM",
+      "verdict": "PASS",
+      "reason": "description stayed pinned to what was admitted",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-002.b",
+      "test_id": "SCHEMA-002",
+      "surface": "b",
+      "severity": "MEDIUM",
+      "verdict": "PASS",
+      "reason": "description stayed pinned to what was admitted",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-003.a",
+      "test_id": "SCHEMA-003",
+      "surface": "a",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "tool names stayed unique",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-003.b",
+      "test_id": "SCHEMA-003",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "call served by the original upstream",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SESSION-001.f",
+      "test_id": "SESSION-001",
+      "surface": "f",
+      "severity": "HIGH",
+      "verdict": "PASS",
+      "reason": "session state stayed isolated across reconnect",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SECRET-001.b",
+      "test_id": "SECRET-001",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "PASS",
+      "reason": "probe returned without interpolating the secret",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUDIT-001.b",
+      "test_id": "AUDIT-001",
+      "surface": "b",
+      "severity": "MEDIUM",
+      "verdict": "PASS",
+      "reason": "action produced an audit event",
+      "evidence_source": "target_audit",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUDIT-001.e",
+      "test_id": "AUDIT-001",
+      "surface": "e",
+      "severity": "MEDIUM",
+      "verdict": "PASS",
+      "reason": "action produced an audit event",
+      "evidence_source": "target_audit",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUDIT-002.b",
+      "test_id": "AUDIT-002",
+      "surface": "b",
+      "severity": "MEDIUM",
+      "verdict": "PASS",
+      "reason": "trace redacted the sensitive argument",
+      "evidence_source": "target_audit",
+      "evidence": {}
+    }
+  ]
+}

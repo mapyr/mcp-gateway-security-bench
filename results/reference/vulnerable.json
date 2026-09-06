@@ -1,0 +1,478 @@
+{
+  "target": "vulnerable",
+  "version": "mcpsb-reference/0.1.0.dev0",
+  "spec_version": "0.1",
+  "generated_at": "2026-09-04T13:14:41+00:00",
+  "note": "No aggregate score by design (SPEC \u00a74).",
+  "totals": {
+    "PASS": 0,
+    "FAIL": 35,
+    "UNSUPPORTED": 0,
+    "DECLARED-OUT-OF-SCOPE": 0,
+    "INCONCLUSIVE": 0,
+    "ERROR": 0
+  },
+  "by_severity": {
+    "CRITICAL": {
+      "PASS": 0,
+      "FAIL": 8,
+      "UNSUPPORTED": 0,
+      "DECLARED-OUT-OF-SCOPE": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "HIGH": {
+      "PASS": 0,
+      "FAIL": 20,
+      "UNSUPPORTED": 0,
+      "DECLARED-OUT-OF-SCOPE": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "MEDIUM": {
+      "PASS": 0,
+      "FAIL": 7,
+      "UNSUPPORTED": 0,
+      "DECLARED-OUT-OF-SCOPE": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    },
+    "LOW": {
+      "PASS": 0,
+      "FAIL": 0,
+      "UNSUPPORTED": 0,
+      "DECLARED-OUT-OF-SCOPE": 0,
+      "INCONCLUSIVE": 0,
+      "ERROR": 0
+    }
+  },
+  "positive_controls": [
+    {
+      "family": "AUDIT",
+      "verdict": "FAIL",
+      "reason": "the audit log recorded nothing for a legitimate action",
+      "evidence_source": "target_audit",
+      "verified": false
+    },
+    {
+      "family": "AUTH",
+      "verdict": "PASS",
+      "reason": "valid credentials were accepted for an authorized tool",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "AUTHZ",
+      "verdict": "PASS",
+      "reason": "an authorized principal could list and call its permitted tool",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "EGRESS",
+      "verdict": "PASS",
+      "reason": "a permitted destination was resolved through the bench DNS (observation plane is in the egress path)",
+      "evidence_source": "dns",
+      "verified": true
+    },
+    {
+      "family": "SCHEMA",
+      "verdict": "PASS",
+      "reason": "the schema-bearing tool was advertised and callable with valid input",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "SECRET",
+      "verdict": "PASS",
+      "reason": "the render tool served a benign template without leaking the secret",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "SESSION",
+      "verdict": "PASS",
+      "reason": "a value written in a session was readable within the same session",
+      "evidence_source": "client_response",
+      "verified": true
+    },
+    {
+      "family": "SSRF",
+      "verdict": "PASS",
+      "reason": "a permitted destination was resolved through the bench DNS (observation plane is in the egress path)",
+      "evidence_source": "dns",
+      "verified": true
+    },
+    {
+      "family": "TENANT",
+      "verdict": "PASS",
+      "reason": "a principal could read its own tenant's data",
+      "evidence_source": "client_response",
+      "verified": true
+    }
+  ],
+  "results": [
+    {
+      "sub_id": "AUTH-001.a",
+      "test_id": "AUTH-001",
+      "surface": "a",
+      "severity": "CRITICAL",
+      "verdict": "FAIL",
+      "reason": "a: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTH-001.b",
+      "test_id": "AUTH-001",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "FAIL",
+      "reason": "b: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTH-002.b",
+      "test_id": "AUTH-002",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "FAIL",
+      "reason": "A's token was accepted while acting as principal B",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTH-003.b",
+      "test_id": "AUTH-003",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "b: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTH-004.b",
+      "test_id": "AUTH-004",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "b: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-001.b",
+      "test_id": "AUTHZ-001",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "b: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-001.c",
+      "test_id": "AUTHZ-001",
+      "surface": "c",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "c: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-001.d",
+      "test_id": "AUTHZ-001",
+      "surface": "d",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "d: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-001.e",
+      "test_id": "AUTHZ-001",
+      "surface": "e",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "batch: unauthorized call executed",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-002.a",
+      "test_id": "AUTHZ-002",
+      "surface": "a",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "hidden tool disclosed by tools/list",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-002.b",
+      "test_id": "AUTHZ-002",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "b: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-003.a",
+      "test_id": "AUTHZ-003",
+      "surface": "a",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "restricted tool discoverable via list",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-003.b",
+      "test_id": "AUTHZ-003",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "b: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-003.c",
+      "test_id": "AUTHZ-003",
+      "surface": "c",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "c: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-003.d",
+      "test_id": "AUTHZ-003",
+      "surface": "d",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "d: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUTHZ-004.e",
+      "test_id": "AUTHZ-004",
+      "surface": "e",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "batch: unauthorized call slipped past the gate",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "TENANT-001.b",
+      "test_id": "TENANT-001",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "FAIL",
+      "reason": "argument re-scoped the tenant; other tenant's data returned",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "TENANT-002.b",
+      "test_id": "TENANT-002",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "FAIL",
+      "reason": "a request-controlled field re-scoped the tenant",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SSRF-001.b",
+      "test_id": "SSRF-001",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "intermediary forwarded the call to the internal address",
+      "evidence_source": "sink",
+      "evidence": {
+        "sink": "/ssrf-001-probe"
+      }
+    },
+    {
+      "sub_id": "SSRF-002.b",
+      "test_id": "SSRF-002",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "FAIL",
+      "reason": "intermediary proxied a call to instance metadata",
+      "evidence_source": "imds",
+      "evidence": {
+        "imds": "hit"
+      }
+    },
+    {
+      "sub_id": "SSRF-003.b",
+      "test_id": "SSRF-003",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "IPv4-mapped encoding reached loopback",
+      "evidence_source": "sink",
+      "evidence": {
+        "sink": "/ssrf-003-probe"
+      }
+    },
+    {
+      "sub_id": "SSRF-004.b",
+      "test_id": "SSRF-004",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "FAIL",
+      "reason": "rebinding reached loopback after a benign policy check",
+      "evidence_source": "sink",
+      "evidence": {
+        "sink": "/ssrf-004-probe"
+      }
+    },
+    {
+      "sub_id": "SSRF-005.b",
+      "test_id": "SSRF-005",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "followed a redirect to an internal destination",
+      "evidence_source": "sink",
+      "evidence": {
+        "sink": "/ssrf-005-final"
+      }
+    },
+    {
+      "sub_id": "EGRESS-001.b",
+      "test_id": "EGRESS-001",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "a confusable child of the allowlisted host was reached",
+      "evidence_source": "sink",
+      "evidence": {
+        "sink": "/egress-001-probe"
+      }
+    },
+    {
+      "sub_id": "SCHEMA-001.a",
+      "test_id": "SCHEMA-001",
+      "surface": "a",
+      "severity": "MEDIUM",
+      "verdict": "FAIL",
+      "reason": "tool silently gained argument(s): ['injected_arg']",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-001.b",
+      "test_id": "SCHEMA-001",
+      "surface": "b",
+      "severity": "MEDIUM",
+      "verdict": "FAIL",
+      "reason": "b: attack succeeded (served a result)",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-002.a",
+      "test_id": "SCHEMA-002",
+      "surface": "a",
+      "severity": "MEDIUM",
+      "verdict": "FAIL",
+      "reason": "tool description mutated after admission",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-002.b",
+      "test_id": "SCHEMA-002",
+      "surface": "b",
+      "severity": "MEDIUM",
+      "verdict": "FAIL",
+      "reason": "tool description mutated after admission",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-003.a",
+      "test_id": "SCHEMA-003",
+      "surface": "a",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "a colliding tool name appears more than once",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SCHEMA-003.b",
+      "test_id": "SCHEMA-003",
+      "surface": "b",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "call served by the shadowing upstream",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SESSION-001.f",
+      "test_id": "SESSION-001",
+      "surface": "f",
+      "severity": "HIGH",
+      "verdict": "FAIL",
+      "reason": "one session's state was readable from another",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "SECRET-001.b",
+      "test_id": "SECRET-001",
+      "surface": "b",
+      "severity": "CRITICAL",
+      "verdict": "FAIL",
+      "reason": "secret interpolated into the response",
+      "evidence_source": "client_response",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUDIT-001.b",
+      "test_id": "AUDIT-001",
+      "surface": "b",
+      "severity": "MEDIUM",
+      "verdict": "FAIL",
+      "reason": "action executed with no audit event",
+      "evidence_source": "target_audit",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUDIT-001.e",
+      "test_id": "AUDIT-001",
+      "surface": "e",
+      "severity": "MEDIUM",
+      "verdict": "FAIL",
+      "reason": "action executed with no audit event",
+      "evidence_source": "target_audit",
+      "evidence": {}
+    },
+    {
+      "sub_id": "AUDIT-002.b",
+      "test_id": "AUDIT-002",
+      "surface": "b",
+      "severity": "MEDIUM",
+      "verdict": "FAIL",
+      "reason": "raw sensitive argument recorded in the trace",
+      "evidence_source": "target_audit",
+      "evidence": {}
+    }
+  ]
+}
