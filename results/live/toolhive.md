@@ -37,14 +37,21 @@ wrong-audience). Running ToolHive with `--oidc-issuer <harness> --oidc-audience`
   unauthenticated"). Clean differential; independent of token validation.
 
 * **AUTH-003 / AUTH-004 INCONCLUSIVE** — the **positive control fails**: a *valid*
-  token is also rejected (401), because ToolHive's proxy could not reach the
-  local issuer's JWKS during validation in this environment (its network model
-  routes/blocks the loopback discovery). With every token rejected, expired and
+  token is also rejected (401). Root cause is now pinned to source, not guessed
+  (earlier drafts said "could not reach the issuer" — that was wrong; the issuer
+  *is* reached). ToolHive v0.46.0 drops `--oidc-insecure-allow-http` and
+  `--thv-ca-bundle` on the `thv run` path (both fields are omitted by
+  `createOIDCConfig`), so its request-time OIDC discovery rejects the bench's
+  issuer — an HTTP issuer as "not HTTPS scheme", a self-signed HTTPS issuer as
+  "certificate signed by unknown authority". Filed upstream as
+  [stacklok/toolhive#6522](https://github.com/stacklok/toolhive/issues/6522);
+  confirmed present on `main`. With every token rejected, expired and
   wrong-audience *cannot be shown to be rejected specifically* rather than as
   part of a blanket failure — so they are **not** claimed as PASS. The issuer
-  harness itself is verified correct in `tests/test_oidc_issuer.py`; making the
-  positive control pass needs the issuer on an address ToolHive's validator
-  admits.
+  harness itself is verified correct in `tests/test_oidc_issuer.py`; the bench
+  refuses the only local workaround (installing the cert into the host system
+  trust store), so these stay INCONCLUSIVE until the upstream fix lands. See
+  `targets/toolhive/NOTES.md`.
 
 ## Still INCONCLUSIVE / UNSUPPORTED
 

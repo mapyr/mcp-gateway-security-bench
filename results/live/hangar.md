@@ -1,5 +1,18 @@
 # Live run — MCP Hangar
 
+> **PRE-GATE RECORD (2026-09-04).** This is a prose record from before the
+> evidence-source (D1), positive-control (D2), claim (D3), and tested-version
+> gates existed. Unlike the Docker record it *does* show positive controls (a
+> valid token accepted before the negatives are counted), so its AUTH/TENANCY
+> results are not superseded to INCONCLUSIVE — but they are **not** a current,
+> gate-checked verdict either: the run was on an **unpinned v2 HEAD checkout**,
+> not a released build, and the adapter's tested floor is now **v2.17.1**
+> (`supports_version`), so a *publishable* Hangar verdict needs a fresh gated run
+> on a pinned ≥2.17.1 build. It is **not reproducible in the current environment**
+> (the installed `mcp-hangar` wheel is 1.4.0, which the version gate withholds as
+> ERROR rather than scoring). Treat everything below as a prior signal pending
+> that re-run; [`../../REPORT.md`](../../REPORT.md) is the authoritative report.
+
 **Hangar is maintained by this bench's author (GOVERNANCE §1).** It runs through
 the same pipeline as every other target; per §1.4 no MCPSB result appears in
 Hangar's own marketing until an external maintainer publishes a run.

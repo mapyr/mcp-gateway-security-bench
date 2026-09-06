@@ -35,15 +35,25 @@ With the issuer reachable from the host, a **valid** token is still rejected
   `--oidc-insecure-allow-http=true`. So the issuer must serve **HTTPS** (the
   harness issuer now can: `--tls-cert/--tls-key`).
 - HTTPS issuer with a self-signed cert → `x509: certificate signed by unknown
-  authority`. `--thv-ca-bundle <cert>` (documented for "JWKS, OIDC discovery") is
-  **not honored by the detached discovery path** in v0.46 — the error persists
-  even with a proper `CA:TRUE` cert supplied as the bundle. `SSL_CERT_FILE` on
-  the `thv run` invocation is likewise not inherited by the detached proxy.
+  authority`. `--thv-ca-bundle <cert>` (documented for "JWKS, OIDC discovery")
+  has no effect — the error persists even with a proper `CA:TRUE` cert supplied
+  as the bundle. `SSL_CERT_FILE` on the `thv run` invocation is likewise not
+  inherited by the detached proxy.
 
-The only remaining way to make ToolHive trust the issuer is to install the cert
-into the host's **system trust store**, which the harness will not do: it is an
-out-of-band change to the operator's machine and a host-exposure the bench is
-supposed to avoid.
+**Root cause (pinned to source, filed upstream).** These are not two separate
+quirks but one bug: on the `thv run` path, `createOIDCConfig()`
+(`cmd/thv/app/run_flags.go`) builds the `TokenValidatorConfig` for the auth
+middleware but never sets `InsecureAllowHTTP` or `CACertPath` (it sets only
+`AllowPrivateIP`). ToolHive's own persisted run config proves it — the top-level
+`oidc_config` has the fields, the `middleware_configs[auth]` blob the proxy
+actually uses has them dropped. Same class as the merged fix #1470 (which wired
+`AllowPrivateIP` into this exact function). Filed as
+[stacklok/toolhive#6522](https://github.com/stacklok/toolhive/issues/6522);
+confirmed still present on `main`.
+
+The only local workaround is installing the cert into the host's **system trust
+store**, which the harness will not do: an out-of-band change to the operator's
+machine and a host-exposure the bench is supposed to avoid.
 
 ### Verdict impact (honest, invariant #8)
 

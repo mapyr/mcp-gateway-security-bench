@@ -11,7 +11,7 @@ accordingly — a verdict is only stood behind where a positive control held.
 | --- | --- | --- |
 | [`docker_mcp_gateway.md`](docker_mcp_gateway.md) | Docker MCP Gateway v2.0.1 | **SUPERSEDED** — its earlier PASSes predate D1/D2 (no structured positive control/evidence) and are not reproducible here; superseded to `INCONCLUSIVE` pending a fresh gated run. SCHEMA-003 = start-time observation, not a verdict. SECRET-001 withheld pending disclosure. |
 | [`hangar.md`](hangar.md) | MCP Hangar (author's own) | Auth + tenancy PASS **with positive controls shown**, but on a v2 HEAD checkout and **before** the current gated harness / version gate; treat as a prior record pending a gated re-run. egress/audit not vouched for. |
-| [`toolhive.md`](toolhive.md) | ToolHive v0.46.0 | AUTH-001 PASS (reproduced this session); AUTH-003/004 `INCONCLUSIVE` (OIDC issuer-trust barrier); harness portability proven. |
+| [`toolhive.md`](toolhive.md) | ToolHive v0.46.0 | AUTH-001 PASS (reproduced this session); AUTH-003/004 `INCONCLUSIVE` — root cause pinned to a ToolHive bug ([#6522](https://github.com/stacklok/toolhive/issues/6522): `thv run` drops `--oidc-insecure-allow-http`/`--thv-ca-bundle`); harness portability proven. |
 
 **Disclosure.** Third-party findings are NOT published here: any FAIL against a
 target the author does not maintain goes to that maintainer privately first and
