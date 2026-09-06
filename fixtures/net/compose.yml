@@ -1,0 +1,94 @@
+# Observation-plane network (WS-2).
+#
+# Runs the four observation servers on a dedicated bench bridge network with
+# fixed addresses. A target under test (WS-6+) joins this same network as an
+# external network and is configured to use `dns` as its resolver, so a
+# malicious server's hostnames resolve through the bench's rebinding zone.
+#
+# The repo root is mounted read-only at /app; the servers are stdlib-only, so
+# the stock python image needs no pip install.
+#
+# IMDS at 169.254.169.254: the imds container adds the link-local address as a
+# secondary (needs NET_ADMIN). Routing that literal address from the *target's*
+# namespace is finalized in each target's own compose (WS-6), because how the
+# SUT reaches egress differs per target.
+
+name: mcpsb-obs
+
+networks:
+  bench:
+    name: mcpsb-bench
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.77.0.0/24
+
+services:
+  sink:
+    image: python:3.11-slim
+    working_dir: /app
+    read_only: false
+    volumes:
+      - ../../:/app:ro
+    command: ["python", "-m", "mcpsb.observation", "sink", "--host", "0.0.0.0", "--port", "8080"]
+    networks:
+      bench:
+        ipv4_address: 10.77.0.10
+
+  dns:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ../../:/app:ro
+    command: ["python", "-m", "mcpsb.observation", "dns", "--host", "0.0.0.0", "--port", "53"]
+    networks:
+      bench:
+        ipv4_address: 10.77.0.53
+
+  imds:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ../../:/app:ro
+    cap_add:
+      - NET_ADMIN
+    # Add the canonical IMDS link-local address, then serve on it and on the
+    # container's own address.
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - "ip addr add 169.254.169.254/32 dev eth0 2>/dev/null || true; exec python -m mcpsb.observation imds --host 0.0.0.0 --port 80"
+    networks:
+      bench:
+        ipv4_address: 10.77.0.169
+
+  redirector:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ../../:/app:ro
+    environment:
+      MCPSB_REDIRECTOR_BASE: "http://10.77.0.81:8081"
+    command: ["python", "-m", "mcpsb.observation", "redirector", "--host", "0.0.0.0", "--port", "8081"]
+    networks:
+      bench:
+        ipv4_address: 10.77.0.81
+
+  # OIDC issuer — first-class on the bench network (WS-A). A target joins
+  # mcpsb-bench and validates the bench's tokens against this issuer, reached at
+  # the `mcpsb-issuer` alias. The `iss`/discovery advertise that same alias
+  # (`--public-url`) so what the target fetches matches what it validates. It
+  # needs the `live` deps, so it pip-installs them before starting (the other
+  # servers are stdlib-only).
+  issuer:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ../../:/app:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - "pip install --quiet --root-user-action=ignore pyjwt cryptography && exec python -m fixtures.oidc.issuer --host 0.0.0.0 --port 8080 --public-url http://mcpsb-issuer:8080"
+    networks:
+      bench:
+        ipv4_address: 10.77.0.20
+        aliases:
+          - mcpsb-issuer

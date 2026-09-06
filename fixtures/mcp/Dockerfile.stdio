@@ -1,0 +1,5 @@
+# A stdio MCP server image for the live target harness (WS-6/7).
+# Stdlib-only; the gateway runs this container and pipes MCP over stdio.
+FROM python:3.11-slim
+COPY stdio_server.py /stdio_server.py
+ENTRYPOINT ["python", "/stdio_server.py"]

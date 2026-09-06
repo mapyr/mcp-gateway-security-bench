@@ -1,0 +1,41 @@
+name: spec-gates
+
+# WS-0 gates. The full target matrix (WS-9) is added later; this workflow keeps
+# the spec, the registry, and the neutrality rules honest on every PR.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  spec-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # severity-freeze diffs against the last tag
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: SPEC.md is in sync with the registry
+        run: python ci/check_spec_drift.py
+
+      - name: Severity of existing IDs is frozen
+        run: python ci/check_severity_freeze.py
+
+      - name: No target names in the neutral attack corpus
+        run: python ci/check_no_target_leak.py
+
+      - name: Differential gate — every attack FAILs vulnerable, PASSes secure
+        run: python ci/check_differential.py
+
+      - name: Registry invariant + runner tests
+        run: |
+          python -m pip install --quiet pytest
+          python -m pytest tests/ -q
+
+      - name: Runner smoke — noop reports all INCONCLUSIVE
+        run: python -m mcpsb.cli run --target noop

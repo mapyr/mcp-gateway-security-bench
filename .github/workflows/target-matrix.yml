@@ -1,0 +1,50 @@
+name: target-matrix
+
+# WS-9. Runs the bench against every target and uploads the reports as
+# artifacts. The controls run fully in CI (stdlib-only, observation plane runs
+# in-process). Real targets (toolhive, docker_mcp_gateway, hangar) have no live
+# harness in CI, so they report INCONCLUSIVE honestly — the run still exercises
+# the adapter, capability declaration, and reporting.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [noop, secure, vulnerable, toolhive, docker_mcp_gateway]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run bench against ${{ matrix.target }}
+        run: |
+          python -m mcpsb.cli run --target ${{ matrix.target }} \
+            --out results/ci --format both || true
+          echo "--- markdown report ---"
+          cat results/ci/${{ matrix.target }}.md
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: mcpsb-report-${{ matrix.target }}
+          path: results/ci/${{ matrix.target }}.*
+
+  # The controls are the reference: vulnerable must be all-FAIL, secure all-PASS.
+  # This asserts the pipeline end-to-end in CI, beyond the differential gate.
+  controls-invariant:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: vulnerable is all-FAIL, secure is all-PASS
+        run: python ci/check_controls_invariant.py

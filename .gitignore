@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.env
+.DS_Store
+
+# Local run artifacts. Committed results live under results/ deliberately;
+# scratch runs do not.
+/tmp-results/
+*.local.json
+
+# Embargoed findings (DISCLOSURE.md §7). Third-party findings and any unfixed
+# own-target findings are kept here, out of the published tree, until the
+# disclosure window closes / a fix ships. NEVER commit this directory.
+/results/private/

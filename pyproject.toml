@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcpsb"
+version = "0.1.0.dev0"
+description = "MCP Gateway Security Bench — a reproducible set of attacks every MCP intermediary should pass"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "MCPSB maintainers" }]
+keywords = ["mcp", "gateway", "security", "benchmark", "intermediary"]
+
+# v0.1 runner deps land in WS-1. The registry + spec gates (WS-0) are stdlib-only.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+# Live auth testing of OIDC-based intermediaries needs the OIDC issuer harness
+# (fixtures/oidc). The core bench and all controls stay stdlib-only.
+live = ["PyJWT>=2", "cryptography>=42"]
+
+[project.scripts]
+mcpsb = "mcpsb.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["mcpsb*"]
+
+[tool.pytest.ini_options]
+# Attacks are @mcpsb.test-decorated callables driven by the runner and the
+# differential gate, not pytest test functions, so they are not collected here.
+# tests/test_attacks_differential.py imports them and runs the gate.
+testpaths = ["tests"]
+markers = [
+    "mcpsb: MCPSB attack test carrying an ID and surface metadata",
+]

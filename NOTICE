@@ -1,0 +1,11 @@
+MCP Gateway Security Bench (MCPSB)
+Copyright 2026 MCPSB maintainers
+
+This product includes software developed by the MCPSB maintainers.
+
+The source code in this repository is licensed under the Apache License,
+Version 2.0 (see LICENSE).
+
+The specification document SPEC.md (and its generated content derived from
+mcpsb/registry.py) is licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0). See LICENSE-SPEC.md.
